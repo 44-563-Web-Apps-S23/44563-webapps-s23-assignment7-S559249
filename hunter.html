@@ -22,13 +22,20 @@
           font-size: 15px;
           margin-top: 4px;
           margin-bottom: 4px;
-          color: yellow;
+          color: green;
           
         }	
         .location {
-          height:"60px";
-           width:"60px";
+          height:"40px";
+          width:"40px";
+          margin-left: 10px;
+          margin-right: 10px;
+
         }
+        .row {
+          display: flex;
+        }
+
     </style>
     </head>
     <body>
@@ -46,8 +53,109 @@
         </div>
     
         <div style="font-family: Arial, Helvetica, sans-serif; margin-top: 4px;">  
-            Click for help      
+          <button onClick="help()">Click for help</button>      
         </div>
         <div id="help">
             Help report
         </div>
+        <div class="container ">
+            <div class="row">
+              <div class="location"><img src="bush.jpg" id = "0" onclick = "check(0)" height="40px" width="40px"></div>
+              <div class="location"><img src="bush.jpg" id = "1" onclick = "check(1)" height="40px" width="40px"></div>
+              <div class="location"><img src="bush.jpg" id = "2" onclick = "check(2)" height="40px" width="40px"></div>
+              <div class="location"><img src="bush.jpg" id = "3" onclick = "check(3)" height="40px" width="40px"></div>
+              <div class="location"><img src="bush.jpg" id = "4" onclick = "check(4)" height="40px" width="40px"></div>
+              <div class="location"><img src="bush.jpg" id = "5" onclick = "check(5)" height="40px" width="40px"></div>
+            </div>
+            <div class="row">
+              <div class="location"><img src="bush.jpg" id = "6"  onclick = "check(6)" height="40px" width="40px"></div>
+              <div class="location"><img src="bush.jpg" id = "7"  onclick = "check(7)" height="40px" width="40px"></div>
+              <div class="location"><img src="bush.jpg" id = "8"  onclick = "check(8)" height="40px" width="40px"></div>
+              <div class="location"><img src="bush.jpg" id = "9"  onclick = "check(9)" height="40px" width="40px"></div>
+              <div class="location"><img src="bush.jpg" id = "10" onclick= "check(10)" height="40px" width="40px"></div>
+              <div class="location"><img src="bush.jpg" id = "11" onclick= "check(11)" height="40px" width="40px"></div>
+            </div>
+            <div class="row">
+                <div class="location"><img src="bush.jpg" id = "12" onclick= "check(12)" height="40px" width="40px"></div>
+                <div class="location"><img src="bush.jpg" id = "13" onclick= "check(13)" height="40px" width="40px"></div>
+                <div class="location"><img src="bush.jpg" id = "14" onclick= "check(14)" height="40px" width="40px"></div>
+                <div class="location"><img src="bush.jpg" id = "15" onclick= "check(15)" height="40px" width="40px"></div>
+                <div class="location"><img src="bush.jpg" id = "16" onclick= "check(16)" height="40px" width="40px"></div>
+                <div class="location"><img src="bush.jpg" id = "17" onclick= "check(17)" height="40px" width="40px"></div>
+            </div>
+            <div class="row">
+                <div class="location"><img src="bush.jpg" id = "18" onclick= "check(18)" height="40px" width="40px"></div>
+                <div class="location"><img src="bush.jpg" id = "19" onclick= "check(19)" height="40px" width="40px"></div>
+                <div class="location"><img src="bush.jpg" id = "20" onclick= "check(20)" height="40px" width="40px"></div>
+                <div class="location"><img src="bush.jpg" id = "21" onclick= "check(21)" height="40px" width="40px"></div>
+                <div class="location"><img src="bush.jpg" id = "22" onclick= "check(22)" height="40px" width="40px"></div>
+                <div class="location"><img src="bush.jpg" id = "23" onclick= "check(23)" height="40px" width="40px"></div>
+            </div>
+        </div>
+        <script>
+           var ids=["0", "1", "2", "3", "4", "5", "6","7", "8", "9", "10", "11", "12", "13", "14", "15", 
+          "16", "17", "18", "19", "20", "21", "22", "23"]
+           var checkCount = 0
+           var penalty = 0
+           var lastCheck = 0
+           var mouseLocation = 13
+           var catLocation = 21
+           var gameOver = false
+
+           function check(position)
+         {
+          if (gameOver == true) {
+        return
+      }
+      checkCount += 1
+        penalty += 1
+        document.getElementById("bushes").innerHTML = "Number of bushes checked is " + checkCount
+
+        if (position == mouseLocation) {
+            document.getElementById(ids[position]).src = "mouse.jpg"
+            gameOver = true
+            penalty -= 3
+            document.getElementById("penalty").innerHTML = "Penalty is " + penalty
+        }
+        else if (position == catLocation) {
+            document.getElementById(ids[position]).src = "cat.jpg"
+            gameOver = true
+            penalty += 4
+            document.getElementById("penalty").innerHTML = "Penalty is " + penalty
+        }
+        else {
+            document.getElementById(ids[position]).src = "grass.jpg"
+            document.getElementById("penalty").innerHTML = "Penalty is " + penalty
+        }
+
+        lastCheck = position
+    }
+    function help() {
+        let row = parseInt(lastCheck / 4) - 1
+        let column = lastCheck % 6 
+        let catRow = parseInt(catLocation / 4) - 1
+        let catCol = catLocation % 6
+        let mouseRow = parseInt(mouseLocation / 4) - 1
+        let mouseCol = mouseLocation % 6  
+
+        if ((Math.abs(catRow - row) <= 1) && (Math.abs(catCol - column) <= 1)) { 
+            document.getElementById("help").innerHTML = "Help report: meow"
+        }
+        else if ((Math.abs(mouseRow - row) <= 1) && (Math.abs(mouseCol - column) <= 1)) {
+            document.getElementById("help").innerHTML = "Help report: squeak"
+        }
+        else {
+            document.getElementById("help").innerHTML = "Help report: sorry, no help available"
+        }
+
+        penalty += 2
+        document.getElementById("penalty").innerHTML = "Penalty is " + penalty
+
+
+          }
+
+        </script>
+
+        
+        </body>
+        </html>
